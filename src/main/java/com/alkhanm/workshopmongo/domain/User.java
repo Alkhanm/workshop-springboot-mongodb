@@ -1,9 +1,16 @@
 package com.alkhanm.workshopmongo.domain;
 
 import java.io.Serializable;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection="user")
+// associa a classe a coleção de documentos MongoDB de name 'user'.
+//Caso não fosse definido manualmente isso acabaria sendo feito automaticamente pelo Spring Data que irá procurar um coleção de menos name em minusculo 
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	@Id
 	private String id;
 	private String name;
 	private String email;
@@ -12,7 +19,6 @@ public class User implements Serializable {
 	}
 
 	public User(String id, String name, String email) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
