@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.alkhanm.workshopmongo.DTO.AuthorDTO;
+import com.alkhanm.workshopmongo.DTO.CommentDTO;
 import com.alkhanm.workshopmongo.domain.Post;
 import com.alkhanm.workshopmongo.domain.User;
 import com.alkhanm.workshopmongo.repository.PostRepository;
@@ -39,13 +40,19 @@ public class Instatiantion implements CommandLineRunner{
 		userRepository.saveAll(Arrays.asList(maria, alex, bob));
 		
 		Post post = new Post(null, sdf.parse("21/03/2018"), "Partiu, viagem!", "Ai galera, bora?", new AuthorDTO(bob));
-		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Bora, poha", "Tamo junto!", new AuthorDTO(bob));
-		Post post2 = new Post(null, sdf.parse("21/03/2018"), "Ow", "Vou tbm.", new AuthorDTO(bob));
+		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Bom dia!", "Acordei feliz.", new AuthorDTO(bob));
+		
+		CommentDTO c1 = new CommentDTO("Boa viagem mano!", sdf.parse("21/03/2018"), new AuthorDTO(alex));
+		CommentDTO c2 = new CommentDTO("Aproveite!", sdf.parse("22/03/2018"), new AuthorDTO(alex));
+		CommentDTO c3 = new CommentDTO("Tenha um ótimo dia!", sdf.parse("22/03/2018"), new AuthorDTO(alex));
+		
+		post.getComments().addAll(Arrays.asList(c1, c2));
+		post1.getComments().addAll(Arrays.asList(c3));
 		
 		
-		postRepository.saveAll(Arrays.asList(post, post1, post2));
+		postRepository.saveAll(Arrays.asList(post, post1));
 		
-		bob.getPosts().addAll(Arrays.asList(post, post1, post2));
+		bob.getPosts().addAll(Arrays.asList(post, post1));
 		userRepository.save(bob);
 		
 	}
