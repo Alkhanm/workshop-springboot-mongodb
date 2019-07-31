@@ -1,5 +1,6 @@
 package com.alkhanm.workshopmongo.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -17,4 +18,8 @@ public interface PostRepository extends MongoRepository<Post, String> {//Associa
 	
 	List<Post> findByTitleContainingIgnoreCase(String text);
 	
+	// $and = comparado 'e'
+	// $gte = maior ou igual a
+	@Query("{ $and: [ { date: {$gte: ?1} }, { date: { $lte: ?2} } , { $or: [ { 'title': { $regex: ?0, $options: 'i' } }, { 'body': { $regex: ?0, $options: 'i' } }, { 'comments.text': { $regex: ?0, $options: 'i' } } ] } ] }")
+	List<Post> fullSearch(String text, Date minDate, Date maxDate);
 }

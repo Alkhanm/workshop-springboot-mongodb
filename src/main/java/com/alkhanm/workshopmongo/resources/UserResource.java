@@ -66,6 +66,5 @@ public class UserResource {
 		User user = service.findById(id);
 		return ResponseEntity.ok().body(user.getPosts());
 	}
-	
-	
 }
+
